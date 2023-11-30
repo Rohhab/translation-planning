@@ -5,6 +5,11 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
+  @Get()
+  currentUser() {
+    return 'You are the current user :)';
+  }
+
   @Post('/signup')
   signUp() {
     return this.usersService.signUp();
