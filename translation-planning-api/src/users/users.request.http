@@ -1,0 +1,9 @@
+### Sign-up route testing
+POST http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+  "name": "Mr. Tester",
+  "email": "tester@testers.com",
+  "password": "test123"
+}
