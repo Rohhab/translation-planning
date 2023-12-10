@@ -5,11 +5,13 @@ import { UsersModule } from './users/users.module';
 import { PlanningModule } from './planning/planning.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     UsersModule,
     PlanningModule,
+    AuthModule,
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'tpdb.sqlite',

@@ -1,0 +1,22 @@
+### Sign-up route testing
+POST http://localhost:3100/auth/signup
+Content-Type: application/json
+
+{
+  "name": "Testers Guy",
+  "email": "2testerzGuy@testers.com",
+  "password": "123test456"
+}
+
+### Sign-in route testing
+POST http://localhost:3100/auth/signin
+Content-Type: application/json
+
+{
+  "name": "Testers Guy",
+  "email": "2testerzGuy@testers.com",
+  "password": "123test456"
+}
+
+### users Route testing
+GET http://localhost:3100/users
