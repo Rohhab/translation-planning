@@ -1,34 +1,58 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import logo from './logo.svg';
+import React from 'react';
+import { useEffect } from 'react';
+import { useRef } from 'react';
+//import { useState } from 'react';
+//import axios from 'axios';
+import toltec from './toltec.webp';
 import './App.css';
 
 function App() {
-  const [message, setMessage] = useState('');
+  const textBoxRef = useRef(null);
+
   useEffect(() => {
-    axios
-      .get('http://localhost:3100')
-      .then((response) => {
-        setMessage(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    const textBoxHeight = textBoxRef.current.offsetHeight;
+    document.documentElement.style.setProperty(
+      '--text-box-height',
+      `${textBoxHeight}px`
+    );
   }, []);
+  // const [message, setMessage] = useState('');
+  // useEffect(() => {
+  //   axios
+  //     .get('http://localhost:3100')
+  //     .then((response) => {
+  //       setMessage(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }, []);
 
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>{message}</p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+        <img src={toltec} alt="The Toltec Warrior" />
+        {/* <p>{message}</p> */}
+        <p ref={textBoxRef}>
+          An average man cares that things are either true or false, but a
+          <i> warrior</i> doesn't. <br />
+          An average man proceeds in a specific way with things that he knows
+          are true, and in a different way with things that he knows are not
+          true. If things are said to be true, he acts and believes in what he
+          does. But if things are said to be untrue, he doesn't care to act, or
+          he doesn't believe in what he does. <br />A <i> warrior</i>, on the
+          other hand, acts in both instances. If things are said to be true, he
+          would act in order to do doing. If things are said to be untrue, he
+          still would act in order to do not-doing. <br />
+          See what I mean?
+        </p>
+        <button
+          onClick={() => {
+            window.location.href = 'http://localhost:3100';
+          }}
         >
-          Learn React
-        </a>
+          Login
+        </button>
       </header>
     </div>
   );
