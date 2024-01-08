@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { useEffect } from 'react';
 import { useRef } from 'react';
 //import { useState } from 'react';
@@ -30,6 +31,9 @@ function App() {
 
   return (
     <div className="App">
+      <Helmet>
+        <title>TranslationPlanning</title>
+      </Helmet>
       <header className="App-header">
         <img src={toltec} alt="The Toltec Warrior" />
         {/* <p>{message}</p> */}
