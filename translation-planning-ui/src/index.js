@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './pages/home-page/App';
-import LoginFunc from './pages/login-page/Login';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
+import App from './pages/home-page/App';
+import LoginFunc from './pages/login-page/Login';
+import Books from './pages/books-page/Books';
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
   {
     path: 'auth/login',
     element: <LoginFunc />,
+  },
+  {
+    path: 'books',
+    element: <Books />,
   },
 ]);
 

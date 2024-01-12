@@ -17,7 +17,7 @@ export class AuthController {
   }
 
   @Post('/login/signin')
-  async signIn(@Body() body: CreateUserDto) {
+  async signIn(@Body() body: Partial<CreateUserDto>) {
     const user = await this.authService.signIn(
       body.name,
       body.email,

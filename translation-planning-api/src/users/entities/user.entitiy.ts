@@ -1,8 +1,16 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Book } from 'src/planning/entities/book.entitiy';
+import { Contract } from 'src/planning/entities/contract.entitiy';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  OneToMany,
+  JoinTable,
+} from 'typeorm';
 
 @Entity()
 export class User {
-  @Column()
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -15,9 +23,10 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ nullable: true })
-  bookId: number;
+  @ManyToMany(() => Book)
+  @JoinTable()
+  books: Book[];
 
-  @Column({ nullable: true })
-  contractId: number;
+  @OneToMany(() => Contract, (contract) => contract.book)
+  contracts: Contract[];
 }

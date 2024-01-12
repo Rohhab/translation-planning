@@ -43,24 +43,47 @@ export class AuthService {
     return userEntity;
   }
 
-  async signIn(name: string, email: string, password: string) {
-    const [user] = await this.usersRepository.find({
-      where: { email: email, name: name },
-    });
+  async signIn(...args: string[]) {
+    const providedPassword = args[2];
 
-    if (!user) {
-      throw new NotFoundException(
-        'No user found with provided information, please sign-up first',
-      );
+    if (args[0] !== '') {
+      const [user] = await this.usersRepository.find({
+        where: { name: args[0] },
+      });
+
+      if (!user) {
+        throw new NotFoundException(
+          'No user found with provided information, please sign-up first',
+        );
+      }
+
+      const [salt, storedHash] = user.password.split('.');
+      const hash = (await scrypt(providedPassword, salt, 32)) as Buffer;
+
+      if (hash.toString('hex') !== storedHash) {
+        throw new BadRequestException('Wrong password!');
+      }
+
+      return user;
+    } else {
+      const [user] = await this.usersRepository.find({
+        where: { email: args[1] },
+      });
+
+      if (!user) {
+        throw new NotFoundException(
+          'No user found with provided information, please sign-up first',
+        );
+      }
+
+      const [salt, storedHash] = user.password.split('.');
+      const hash = (await scrypt(providedPassword, salt, 32)) as Buffer;
+
+      if (hash.toString('hex') !== storedHash) {
+        throw new BadRequestException('Wrong password!');
+      }
+
+      return user;
     }
-
-    const [salt, storedHash] = user.password.split('.');
-    const hash = (await scrypt(password, salt, 32)) as Buffer;
-
-    if (hash.toString('hex') !== storedHash) {
-      throw new BadRequestException('Wrong password!');
-    }
-
-    return user;
   }
 }
