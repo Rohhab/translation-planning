@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { useState } from 'react';
 import axios from 'axios';
-import toltec from './toltec.webp';
+import toltec from '../toltec.webp';
 import './Login.css';
 
 const formTypes = {
@@ -11,7 +11,7 @@ const formTypes = {
   SIGNUP: 'signup',
 };
 
-function LoginFunc() {
+function Login() {
   const [formType, setFormType] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
@@ -259,4 +259,4 @@ function LoginFunc() {
   );
 }
 
-export default LoginFunc;
+export default Login;

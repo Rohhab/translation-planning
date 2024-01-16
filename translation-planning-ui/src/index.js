@@ -3,18 +3,18 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
-import App from './pages/home-page/App';
-import LoginFunc from './pages/login-page/Login';
+import Login from './pages/login-page/Login';
 import Books from './pages/books-page/Books';
+import HomePage from './pages/home-page/Home-page';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: <HomePage />,
   },
   {
     path: 'auth/login',
-    element: <LoginFunc />,
+    element: <Login />,
   },
   {
     path: 'books',
