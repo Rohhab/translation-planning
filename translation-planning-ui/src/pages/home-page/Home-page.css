@@ -26,26 +26,26 @@
   max-width: 800px;
 }
 
-.HomePage__button {
+.HomePage__button button {
   position: fixed;
   top: 80vh;
   left: 50%;
-  height: 0;
   transform: translate(-50%, -50%);
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   text-align: center;
   -webkit-text-stroke: 10% black;
   -webkit-text-fill-color: white;
+  background-color: #4a2ccfbd;
   font-size: 18px;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 14px;
   transition: background-color 0.3s ease;
+  padding: 10px 20px;
 }
 
-.HomePage__button:hover {
+.HomePage__button button:hover {
   background-color: #813119c4;
   opacity: 0.8;
 }
