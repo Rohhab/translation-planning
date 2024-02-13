@@ -80,7 +80,7 @@ button:hover {
 .LoginPage__content form {
   position: relative;
   width: 30vw;
-  height: 45vh;
+  height: 35vh;
   background-color: rgba(0, 0, 0, 0.582);
   border-radius: 10px;
 }
@@ -103,51 +103,10 @@ button:hover {
   cursor: not-allowed;
 }
 
-.LoginPage__content form input[type='username']:focus,
-.LoginPage__content form input[type='email']:focus,
-.LoginPage__content form input[type='password']:focus {
-  background-color: rgba(255, 255, 255, 0.829);
-  box-shadow: 0 0 5px rgba(11, 85, 155, 0.2),
-    inset 0 0 5px rgba(0, 102, 255, 0.1);
-  animation: input_focused 0.8s ease-out infinite alternate;
-}
-@keyframes input_focused {
-  0% {
-    border-color: #130b5a;
-    box-shadow: 0 0 5px rgba(0, 38, 255, 0.2), inset 0 0 5px rgba(0, 0, 0, 0.1);
-  }
-  100% {
-    border-color: rgb(102, 156, 255);
-    box-shadow: 0 0 20px rgba(0, 81, 255, 0.6),
-      inset 0 0 10px rgba(17, 0, 255, 0.4);
-  }
-}
-
-.LoginPage__content form input[type='username']:invalid,
-.LoginPage__content form input[type='email']:invalid,
-.LoginPage__content form input[type='password']:invalid {
-  background-color: rgba(255, 255, 255, 0.829);
-  box-shadow: 0 0 5px rgba(155, 11, 23, 0.2),
-    inset 0 0 5px rgba(255, 0, 13, 0.1);
-  animation: input_invalid 0.8s ease-out infinite alternate;
-}
-@keyframes input_invalid {
-  0% {
-    border-color: #5a0b0b;
-    box-shadow: 0 0 5px rgba(255, 0, 21, 0.2), inset 0 0 5px rgba(0, 0, 0, 0.1);
-  }
-  100% {
-    border-color: rgb(255, 102, 110);
-    box-shadow: 0 0 20px rgba(255, 0, 21, 0.6),
-      inset 0 0 10px rgba(255, 0, 13, 0.4);
-  }
-}
-
 .LoginPage__content form button {
   display: block;
   position: relative;
   margin: auto;
-  margin-top: 15px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   text-align: center;
   -webkit-text-stroke: 10% black;
