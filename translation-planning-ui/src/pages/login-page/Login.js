@@ -10,21 +10,50 @@ function Login() {
   const handleSubmit = (values) => {
     if (selectedForm === 'SIGNUP') {
       axios
-        .post('http://localhost:3100/auth/login/signup', values)
+        .post('http://localhost:3100/api/auth/login/signup', values)
         .then((response) => {
           console.log('Response from the API:', response.data);
+          // if (response.status === 201) {
+          //   window.location.href = '../books';
+          // }
         })
         .catch((error) => {
           console.error('Error:', error);
+          console.log('Error', error.response.data.message);
         });
-      console.log('Form submitted with values:', values);
+    } else if (selectedForm === 'SIGNIN_USERNAME') {
+      axios
+        .post('http://localhost:3100/api/auth/login/signin', values)
+        .then((response) => {
+          console.log('Response from the API:', response.data);
+          // if (response.status === 201) {
+          //   window.location.href = '../books';
+          // }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          console.log('Error', error.response.data.message);
+        });
+    } else if (selectedForm === 'SIGNIN_EMAIL') {
+      axios
+        .post('http://localhost:3100/api/auth/login/signin', values)
+        .then((response) => {
+          console.log('Response from the API:', response.data);
+          // if (response.status === 201) {
+          //   window.location.href = '../books';
+          // }
+        })
+        .catch((error) => {
+          console.error('Error:', error.response.data.message);
+          console.log('Error', error.response.data.message);
+        });
     }
   };
 
   const Form = () => {
     const formik = useFormik({
       initialValues: {
-        name: '',
+        username: '',
         email: '',
         password: '',
       },
@@ -167,6 +196,14 @@ function Login() {
         </Helmet>
 
         <Form />
+        <button
+          onClick={() =>
+            (window.location.href =
+              'http://localhost:3100/api/auth/login/google')
+          }
+        >
+          Sign in with Google!
+        </button>
       </div>
     </div>
   );
