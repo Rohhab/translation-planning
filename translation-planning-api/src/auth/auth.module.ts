@@ -3,16 +3,18 @@ import { UsersModule } from 'src/users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { GoogleStrategy } from './google.strategy';
-import { currentUserMiddleware } from 'src/middlewares/current-user.middleware';
+import { GoogleStrategy } from './strategies/google.strategy';
+import { requestShaperMiddleware } from 'src/middlewares/request-shaper.middleware';
+import { PassportModule } from '@nestjs/passport';
+import { LocalStrategy } from './strategies/local.strategy';
 
 @Module({
-  imports: [UsersModule, ConfigModule.forRoot()],
+  imports: [UsersModule, ConfigModule.forRoot(), PassportModule],
   controllers: [AuthController],
-  providers: [AuthService, GoogleStrategy],
+  providers: [AuthService, GoogleStrategy, LocalStrategy],
 })
 export class AuthModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(currentUserMiddleware).forRoutes('*');
+    consumer.apply(requestShaperMiddleware).forRoutes('/auth/login/signin');
   }
 }

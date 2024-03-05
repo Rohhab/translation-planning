@@ -11,7 +11,8 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/users/dtos/create-user.dto';
-import { GoogleOAuthGuard } from './google-oauth.guard';
+import { GoogleOAuthGuard } from './guards/google-oauth.guard';
+import { localAuthGuard } from './guards/local-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -37,13 +38,17 @@ export class AuthController {
     return user;
   }
 
+  @UseGuards(localAuthGuard)
   @Post('/login/signin')
-  async signIn(@Body() body: Partial<CreateUserDto>) {
-    const user = await this.authService.signIn(
-      body.username,
-      body.email,
-      body.password,
-    );
-    return user;
+  async login(@Request() req) {
+    return req.user;
   }
+  // async signIn(@Body() body: Partial<CreateUserDto>) {
+  //   const user = await this.authService.signIn(
+  //     body.username,
+  //     body.email,
+  //     body.password,
+  //   );
+  //   return user;
+  // }
 }

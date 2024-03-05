@@ -1,5 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { promisify } from 'util';
 import { UsersService } from 'src/users/users.service';
@@ -20,10 +23,11 @@ export class AuthService {
     };
   }
 
-  async signUp(name: string, email: string, password: string) {
+  async signUp(...args: string[]) {
+    const [name, email, password] = args;
     const user = await this.usersService.findUser(name, email);
 
-    if (user.length) {
+    if (user) {
       throw new BadRequestException(
         'Email already registered, sign-in with your email or try to sign-up with another one',
       );
@@ -37,10 +41,14 @@ export class AuthService {
   }
 
   async signIn(...args: string[]) {
-    const providedPassword = args[2];
+    const [name, email, providedPassword] = args;
 
-    const user = await this.usersService.findUserTest(...args);
-
+    const user = await this.usersService.findUser(name, email);
+    if (!user) {
+      throw new NotFoundException(
+        'No user found in the first if with provided information, please sign-up first',
+      );
+    }
     const [salt, storedHash] = user.password.split('.');
     const hash = (await scrypt(providedPassword, salt, 32)) as Buffer;
 
@@ -49,5 +57,21 @@ export class AuthService {
     }
 
     return user;
+  }
+
+  async validateUser(...args: string[]): Promise<any> {
+    const [identifier, providedPassword] = args;
+
+    const user = await this.usersService.findUser(identifier);
+
+    const [salt, storedHash] = user.password.split('.');
+    const hash = (await scrypt(providedPassword, salt, 32)) as Buffer;
+
+    if (user && hash.toString('hex') === storedHash) {
+      const { password, ...result } = user;
+      return result;
+    }
+
+    return null;
   }
 }

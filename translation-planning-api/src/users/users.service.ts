@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entitiy';
 import { Repository } from 'typeorm';
@@ -23,41 +19,30 @@ export class UsersService {
     return user;
   }
 
-  async findUser(name: string, email: string) {
-    const user = await this.usersRepository.find({
-      where: {
-        email: email,
-        name: name,
-      },
-    });
-    return user;
-  }
+  async findUser(...args: string[]) {
+    if (args.length > 1) {
+      const [name, email] = args;
 
-  async findUserTest(...args: string[]) {
-    if (args[0]) {
-      const [user] = await this.usersRepository.find({
-        where: { name: args[0] },
-      });
-      if (!user) {
-        throw new NotFoundException(
-          'No user found with provided information, please sign-up first',
+      if (!name && !email) {
+        throw new BadRequestException(
+          'Provide either a username or an email to sign in',
         );
+      } else {
+        const [user] = await this.usersRepository.find({
+          where: {
+            name: name,
+            email: email,
+          },
+        });
+        return user;
       }
-      return user;
-    } else if (args[1]) {
-      const [user] = await this.usersRepository.find({
-        where: { email: args[1] },
-      });
-      if (!user) {
-        throw new NotFoundException(
-          'No user found with provided information, please sign-up first',
-        );
-      }
-      return user;
     } else {
-      throw new BadRequestException(
-        'Provide either a username or an email to sign in',
-      );
+      const [identifier] = args;
+      const [user] = await this.usersRepository.find({
+        where: [{ name: identifier }, { email: identifier }],
+      });
+
+      return user;
     }
   }
 }
